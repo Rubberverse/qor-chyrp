@@ -11,7 +11,7 @@ blue='\033[38;5;99m'
 printf "%b" "[entrypoint] Entrypoint script is launched\n[entrypoint] You're running as $(whoami)\n"
 
 printf "%b" "[✨ " "$purple" "entrypoint - Info" "$cend" "] Substituting environmental variables for NGINX configuration\n"
-envsubst '${WORKER_PROCESSES} ${WORKER_CONNECTIONS} ${MULTI_ACCEPT}' < /app/configs/nginx.conf.template > /app/configs/nginx/nginx.conf
+envsubst '${WORKER_PROCESSES} ${WORKER_CONNECTIONS} ${MULTI_ACCEPT} ${CLIENT_MAX_BODY_SIZE} ${SENDFILE} ${TCP_NOPUSH} ${CHARSET} ${KEEPALIVE_TIMEOUT} ${GZIP_VARY}' < /app/configs/nginx.conf.template > /app/configs/nginx/nginx.conf
 envsubst '${SERVER_PORT} ${CHYRP_SERVER_NAME} ${FASTCGI_CONNECTION} ${VALID_REFS}' < /app/configs/chyrp.conf.template > /app/configs/nginx/sites-enabled/chyrp.conf
 printf "%b" "[✨ " "$purple" "entrypoint - Pass" "$cend" "] ✅ Successfully substituted environmental variables for NGINX configuration!\n"
 
