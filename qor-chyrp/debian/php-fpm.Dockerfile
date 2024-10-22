@@ -12,7 +12,7 @@ ARG DEB="php8.2" \
     PHP_VERSION="8.2" \
     CHYRP_VERSION="2024.03" \
     COMPOSER_VERSION="2.8.1" \
-    CONT_USER=www-data \
+    CONT_USER=nginx_user \
     CONT_UID=1001
 
 ENV DEB=$DEB \
@@ -33,8 +33,6 @@ RUN apt update \
         sendmail \
         gettext-base \
         ca-certificates \
-    && deluser \
-        ${CONT_USER} \
     && addgroup \
         --system \
         --gid ${CONT_UID} \
@@ -51,10 +49,13 @@ RUN apt update \
         tini \
         nginx \
         unzip \
+        ${DEB} \
         ${DEB}-gd \
         ${DEB}-fpm \
         ${DEB}-intl \
         ${DEB}-curl \
+        ${DEB}-cgi \
+        ${DEB}-cli \
         ${DEB}-mysql \
         ${DEB}-pgsql \
         ${DEB}-mcrypt \
@@ -63,6 +64,7 @@ RUN apt update \
         ${DEB}-mbstring \
     && mkdir -p \
         /app/run \
+        /app/www \
         /app/scripts \
         /app/logs/fpm \
         /app/logs/nginx \
@@ -70,52 +72,30 @@ RUN apt update \
         /app/php-fpm/session \
         # Hardcoded: https://salsa.debian.org/nginx-team/nginx/-/blob/debian/1.26.0-2/debian/rules#L32
         /var/lib/nginx \
+    && mv /etc/nginx /app/configs/nginx \
     && touch \
         /app/logs/fpm/php-error.log \
         /app/logs/fpm/fpm-error.log \
         /app/logs/fpm/fpm-access.log \
-    && mv /etc/nginx /app/configs/nginx \
+        /app/configs/nginx/sites-enabled/chyrp.conf \
     && rm \
         /app/configs/nginx/sites-available/default \
         /app/configs/nginx/sites-enabled/default \
         /app/configs/nginx/nginx.conf \
     && rm -rf \
         /app/configs/nginx/snippets \
-    && touch /app/configs/nginx/sites-enabled/chyrp.conf \
     # Don't need no manuals, we in docker bitch1111
     && rm -rf /usr/share/man
 
-COPY php.ini /app/configs/fpm/php.ini
-COPY fpm.conf /app/configs/fpm/php-fpm.conf
-COPY www.conf /app/configs/fpm/pool.d/www.conf
-COPY nginx.conf /app/configs/nginx.conf.template
-COPY chyrp.conf /app/configs/chyrp.conf.template
+COPY configs/php.ini /app/configs/fpm/php.ini
+COPY configs/fpm.conf /app/configs/fpm/php-fpm.conf
+COPY configs/www.conf /app/configs/fpm/pool.d/www.conf
+COPY configs/nginx.conf /app/configs/nginx.conf.template
+COPY configs/chyrp.conf /app/configs/chyrp.conf.template
 
-RUN curl -Lo /app/chyrplite.zip https://github.com/xenocrat/chyrp-lite/archive/refs/tags/v${CHYRP_VERSION}.zip \
-    && unzip -d /app /app/chyrplite.zip \
-    # God I hate this nonsense
-    && mv /app/chyrp-lite-${CHYRP_VERSION} /app/chyrp \
-    # Like why doesn't it just work the same as in bash?
-    # Doing same mv command above suddenly screws up every single directory
-    && mv /app/chyrp /var/www \
-    && chown -R $CONT_USER:$CONT_USER \
+RUN chown -Rf $CONT_USER:$CONT_USER \
         /app \
-        /var/www \
         /var/lib/nginx \
-    && ls -l /var/www/chyrp \
-    && rm -rf \
-        /var/www/chyrp/.github \
-        /var/www/chyrp/uploads \
-        /var/www/chyrp/licenses \
-        /var/www/html \
-    && rm \
-        /var/www/chyrp/.gitignore \
-        /var/www/chyrp/.dockerignore \
-        /var/www/chyrp/upgrade.php \
-        /var/www/chyrp/install.php \
-        /var/www/chyrp/Dockerfile \
-        /var/www/chyrp/*.md \
-        /app/chyrplite.zip \
     && apt remove --auto-remove -y \
         unzip \
     && rm -rf /var/lib/apt/lists/*
@@ -149,13 +129,13 @@ ENV TINI_SUBREAPER=1 \
     UPLOAD_MAX_FILESIZE=100M \
     DISPLAY_ERRORS='STDOUT' \
     DISPLAY_STARTUP_ERRORS=1 \
-    EXPOSE_PHP=1 \
+    EXPOSE_PHP=0 \
     SERVER_PORT=9001 \
     CHYRP_SERVER_NAME="blog.rubberverse.xyz www.rubberverse.xyz rubberverse.xyz" \
     FASTCGI_CONNECTION="unix:/app/run/php-fpm.sock" \
-    MULTI_ACCEPT="on" \
-    WORKER_CONNECTIONS=2048 \
-    WORKER_PROCESSES="auto" \
+    MULTI_ACCEPT="off" \
+    WORKER_CONNECTIONS=1024 \
+    WORKER_PROCESSES=4 \
     VALID_REFS="blog.rubberverse.xyz www.rubberverse.xyz rubberverse.xyz cdn.discordapp.com discord.com" \
     LISTEN_ADDRESS="/app/run/php-fpm.sock" \
     ALLOWED_CLIENTS="127.0.0.1" \
@@ -164,9 +144,17 @@ ENV TINI_SUBREAPER=1 \
     LOG_BUFFERING="no" \
     LOG_LIMIT=2048 \
     LOG_LEVEL="warn" \
-    LOG_ERRORS="on" \
-    PM_DAEMON_VALUE="ondemand" \
-    PM_MAX_CHILDREN=16 \
-    PM_PROCESS_IDLE_TIMEOUT="3s"
+    LOG_ERRORS_FPM="on" \
+    PROCESS_MANAGER="static" \
+    PM_MAX_CHILDREN=32 \
+    PM_START_SERVERS=4 \
+    PM_MIN_SPARE_SERVERS=2 \
+    PM_MAX_SPARE_SERVERS=8 \
+    GZIP_VARY="on" \
+    KEEPALIVE_TIMEOUT="20s" \
+    CHARSET="utf-8" \
+    TCP_NOPUSH="on" \
+    SENDFILE="on" \
+    CLIENT_MAX_BODY_SIZE="100M"
 
 ENTRYPOINT ["/app/scripts/docker-entrypoint.sh"]
