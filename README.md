@@ -1,5 +1,5 @@
 # qor-chyrp
-Experimental rootless container running php-fpm, NGINX and serving Chyrp Lite.
+Experimental rootless container running pre-configured php-fpm and NGINX, intended for serving Chyrp Lite.
 
 ## Prerequisites
 
