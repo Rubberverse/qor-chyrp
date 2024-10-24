@@ -4,9 +4,9 @@
 # I suppose it became it's own thing now, huh?
 
 ARG IMAGE_REPOSITORY=docker.io/library
-ARG IMAGE_NODE_VERSION=18-bookworm-slim
+ARG IMAGE_VERSION=bookworm-slim
 
-FROM $IMAGE_REPOSITORY/node:$IMAGE_NODE_VERSION AS debian-base
+FROM $IMAGE_REPOSITORY/debian:$IMAGE_VERSION AS debian-base
 
 ARG DEB="php8.2" \
     PHP_VERSION="8.2" \
@@ -45,10 +45,8 @@ RUN apt update \
         --disabled-password \
         ${CONT_USER} \
     && apt install --no-install-recommends -y \
-        curl \
         tini \
         nginx \
-        unzip \
         ${DEB} \
         ${DEB}-gd \
         ${DEB}-fpm \
@@ -78,27 +76,168 @@ RUN apt update \
         /app/logs/fpm/fpm-error.log \
         /app/logs/fpm/fpm-access.log \
         /app/configs/nginx/sites-enabled/chyrp.conf \
+    # Frees up around 200MB
     && rm \
         /app/configs/nginx/sites-available/default \
         /app/configs/nginx/sites-enabled/default \
         /app/configs/nginx/nginx.conf \
+        /usr/bin/tar \
+        /usr/bin/taskset \
+        /usr/bin/tee \
+        /usr/bin/timedatectl \
+        /usr/bin/systemd-mount \
+        /usr/bin/systemd-tty-ask-password-agent \
+        /usr/bin/systemd-tmpfiles \
+        /usr/bin/systemd-sysusers \
+        /usr/bin/systemd-sysext \
+        /usr/bin/systemd-stdio-bridge \
+        /usr/bin/systemd-run \
+        /usr/bin/systemd-repart \
+        /usr/bin/systemd-path \
+        /usr/bin/systemd-notify \
+        /usr/bin/systemd-machine-id-setup \
+        /usr/bin/systemd-inhibit \
+        /usr/bin/systemd-id128 \
+        /usr/bin/systemd-firstboot \
+        /usr/bin/systemd-escape \
+        /usr/bin/systemd-detect-virt \
+        /usr/bin/systemd-delta \
+        /usr/bin/systemd-cryptenroll \
+        /usr/bin/systemd-creds \
+        /usr/bin/systemd-cgtop \
+        /usr/bin/systemd-cgls \
+        /usr/bin/systemd-cat \
+        /usr/bin/systemd-ask-password \
+        /usr/bin/systemd-analyze \
+        /usr/bin/systemctl \
+        /usr/bin/sum \
+        /usr/bin/su \
+        /usr/bin/stty \
+        /usr/bin/streamzip \
+        /usr/bin/ss \
+        /usr/bin/splain \
+        /usr/bin/sort \
+        /usr/bin/shasum \
+        /usr/bin/sha512sum \
+        /usr/bin/sha384sum \
+        /usr/bin/sha256sum \
+        /usr/bin/sha224sum \
+        /usr/bin/sha1sum \
+        /usr/bin/setterm \
+        /usr/bin/setpriv \
+        /usr/bin/sensible-editor \
+        /usr/bin/sensible-pager \
+        /usr/bin/sensible-browser \
+        /usr/bin/scriptreplay \
+        /usr/bin/scriptlive \
+        /usr/bin/script \
+        /usr/bin/realpath \
+        /usr/bin/bash \
+        /usr/bin/pod2html \
+        /usr/bin/pod2text \
+        /usr/bin/pod2usage \
+        /usr/bin/podchecker \
+        /usr/bin/perl* \
+        /usr/bin/newgrp \
+        /usr/bin/networkctl \
+        /usr/bin/mawk \
+        /usr/bin/loginctl \
+        /usr/bin/localedef \
+        /usr/bin/localectl \
+        /usr/bin/locale \
+        /usr/bin/kill \
+        /usr/bin/killall \
+        /usr/bin/kernel-install \
+        /usr/bin/journalctl \
+        /usr/bin/hostnamectl \
+        /usr/bin/gpasswd \
+        /usr/bin/git \
+        /usr/bin/git-shell \
+        /usr/bin/find \
+        /usr/bin/dpkg \
+        /usr/bin/dpkg-* \
+        /usr/bin/debconf \
+        /usr/bin/debconf-* \
+        /usr/bin/apt \
+        /usr/bin/apt-* \
+        /usr/sbin/chpasswd \
+        /usr/sbin/chcpu \
+        /usr/sbin/blockdev \
+        /usr/sbin/blkid \
+        /usr/sbin/blkdiscard \
+        /usr/sbin/blkdeactivate \
+        /usr/sbin/ctrlaltdel \
+        /usr/sbin/cppw \
+        /usr/sbin/debugfs \
+        /usr/sbin/devlink \
+        /usr/sbin/dmsetup \
+        /usr/sbin/dpkg-fsys-usrunmess \
+        /usr/sbin/dpkg-preconfigure \
+        /usr/sbin/dumpe2fs \
+        /usr/sbin/e4crypt \
+        /usr/sbin/e4defrag \
+        /usr/sbin/findfs \
+        /usr/sbin/installkernel \
+        /usr/sbin/isosize \
+        /usr/sbin/ldattach \
+        /usr/sbin/ldconfig \
+        /usr/sbin/mke2fs \
+        /usr/sbin/mkfs \
+        /usr/sbin/mkfs.cramfs \
+        /usr/sbin/mkfs.minix \
+        /usr/sbin/mkhomedir_helper \
+        /usr/sbin/mklost+found \
+        /usr/sbin/mkswap \	
+        /usr/sbin/pam-auth-update \
+        /usr/sbin/pam_getenv \
+        /usr/sbin/pam_namespace_helper \
+        /usr/sbin/pam_timestamp_check \
+        /usr/sbin/pwck \
+        /usr/sbin/pwconv \
+        /usr/sbin/pwunconv \
+        /usr/sbin/resize2fs \
+        /usr/sbin/setcap \
+        /usr/sbin/swapon \
+        /usr/sbin/swapoff \
+        /usr/sbin/sysctl \
+        /usr/sbin/tune2fs \
+        /usr/sbin/userdel \
+        /usr/sbin/useradd \
+        /usr/sbin/groupadd \
+        /usr/sbin/groupdel \
+        /usr/sbin/zramctl \
+        /usr/sbin/wipefs \
     && rm -rf \
+        /usr/lib/apt \
+        /usr/lib/binfmt.d \
+        /usr/lib/dpkg \
+        /usr/lib/environment.d \
+        /usr/lib/git-core \
+        /usr/lib/systemd \
+        /usr/lib/tmpfiles.d \
+        /usr/share/bash-completion \
+        /usr/share/X11 \
+        /usr/share/git-core \
+        /usr/share/git-web \
+        /usr/share/initramfs-tools \
+        /usr/share/java \
+        /usr/share/pam \
+        /usr/share/perl \
+        /usr/share/perl5 \
+        /usr/share/vim \
+        /var/lib/systemd \
         /app/configs/nginx/snippets \
-    # Don't need no manuals, we in docker bitch1111
-    && rm -rf /usr/share/man
+        /var/lib/apt/lists/*
 
-COPY configs/php.ini /app/configs/fpm/php.ini
-COPY configs/fpm.conf /app/configs/fpm/php-fpm.conf
-COPY configs/www.conf /app/configs/fpm/pool.d/www.conf
-COPY configs/nginx.conf /app/configs/nginx.conf.template
-COPY configs/chyrp.conf /app/configs/chyrp.conf.template
+COPY php.ini /app/configs/fpm/php.ini
+COPY fpm.conf /app/configs/fpm/php-fpm.conf
+COPY www.conf /app/configs/fpm/pool.d/www.conf
+COPY nginx.conf /app/configs/nginx.conf.template
+COPY chyrp.conf /app/configs/chyrp.conf.template
 
 RUN chown -Rf $CONT_USER:$CONT_USER \
-        /app \
-        /var/lib/nginx \
-    && apt remove --auto-remove -y \
-        unzip \
-    && rm -rf /var/lib/apt/lists/*
+    /app \
+    /var/lib/nginx
 
 COPY --chmod=755 docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
 
