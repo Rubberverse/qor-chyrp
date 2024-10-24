@@ -30,7 +30,6 @@ RUN apt update \
         sed \
         curl \
         adduser \
-        sendmail \
         gettext-base \
         ca-certificates \
     && addgroup \
@@ -81,6 +80,40 @@ RUN apt update \
         /app/configs/nginx/sites-available/default \
         /app/configs/nginx/sites-enabled/default \
         /app/configs/nginx/nginx.conf \
+        /usr/bin/base64 \
+        /usr/bin/base32 \
+        /usr/bin/git-receive-pack \
+        /usr/bin/git-upload-archive \
+        /usr/bin/git-upload-pack \
+        /usr/bin/shred \
+        /usr/bin/systemd \
+        /usr/bin/tabs \
+        /usr/bin/toe \
+        /usr/bin/top \
+        /usr/bin/passwd \
+        /usr/bin/pager \
+        /usr/bin/prove \
+        /usr/bin/pstree.x11 \
+        /usr/bin/rdma \
+        /usr/bin/which.debianutils \
+        /usr/bin/which \
+        /usr/bin/zipdetails \
+        /usr/bin/zmore \
+        /usr/bin/znew \
+        /usr/bin/more \
+        /usr/bin/mkfifo \
+        /usr/bin/findmnt \
+        /usr/bin/fgrep \
+        /usr/bin/dircolors \
+        /usr/bin/deb-systemd-helper \
+        /usr/bin/deb-systemd-invoke \
+        /usr/bin/busctl \
+        /usr/bin/bashbug \
+        /usr/bin/mv \
+        /usr/bin/uncompress \
+        /usr/bin/unexpand \
+        /usr/bin/unlink \
+        /usr/bin/update-alternatives \
         /usr/bin/tar \
         /usr/bin/taskset \
         /usr/bin/tee \
@@ -145,8 +178,6 @@ RUN apt update \
         /usr/bin/localedef \
         /usr/bin/localectl \
         /usr/bin/locale \
-        /usr/bin/kill \
-        /usr/bin/killall \
         /usr/bin/kernel-install \
         /usr/bin/journalctl \
         /usr/bin/hostnamectl \
@@ -177,14 +208,36 @@ RUN apt update \
         /usr/sbin/e4crypt \
         /usr/sbin/e4defrag \
         /usr/sbin/findfs \
+        /usr/sbin/filefrag \
+        /usr/sbin/e2* \
+        /usr/sbin/delgroup \
+        /usr/sbin/groupmod \
+        /usr/sbin/dpkg-reconfigure \
+        /usr/sbin/blkzone \
+        /usr/sbin/capsh \
+        /usr/sbin/pwhistory_helper \
+        /usr/sbin/addgroup \
+        /usr/sbin/adduser \
+        /usr/sbin/deluser \
+        /usr/sbin/badblocks \
+        /usr/sbin/agetty \
+        /usr/sbin/add-shell \
+        /usr/sbin/fsck* \
+        /usr/sbin/dcb \
+        /usr/sbin/remove-shell \
+        /usr/sbin/newusers \
+        /usr/sbin/swaplabel \
+        /usr/sbin/service \
+        /usr/sbin/usermod \
         /usr/sbin/installkernel \
         /usr/sbin/isosize \
         /usr/sbin/ldattach \
         /usr/sbin/ldconfig \
         /usr/sbin/mke2fs \
-        /usr/sbin/mkfs \
-        /usr/sbin/mkfs.cramfs \
-        /usr/sbin/mkfs.minix \
+        /usr/sbin/mkfs* \
+        /usr/sbin/sulogin \
+        /usr/sbin/switch_root \
+        /usr/sbin/runuser \
         /usr/sbin/mkhomedir_helper \
         /usr/sbin/mklost+found \
         /usr/sbin/mkswap \	
@@ -227,7 +280,7 @@ RUN apt update \
         /usr/share/vim \
         /var/lib/systemd \
         /app/configs/nginx/snippets \
-        /var/lib/apt/lists/*
+        /var/lib/apt
 
 COPY php.ini /app/configs/fpm/php.ini
 COPY fpm.conf /app/configs/fpm/php-fpm.conf
