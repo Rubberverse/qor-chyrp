@@ -18,7 +18,7 @@ printf "%b" "[✨ " "$purple" "entrypoint - Pass" "$cend" "] ✅ Successfully su
 printf "%b" "$darkorange" " ______        _     _                                             \n(_____ \      | |   | |                                            \n _____) )_   _| |__ | |__  _____  ____ _   _ _____  ____ ___ _____ \n|  __  /| | | |  _ \|  _ \| ___ |/ ___) | | | ___ |/ ___)___) ___ |\n| |  \ \| |_| | |_) ) |_) ) ____| |    \ V /| ____| |  |___ | ____|\n|_|   |_|____/|____/|____/|_____)_|     \_/ |_____)_|  (___/|_____)\n" "$cend";
 printf "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n"
 printf "%b" "🗒️ " "$blue" "Setup Guide " "$cend" "- None \n"
-printf "%b" "📁 " "$green" "GitHub Repository " "$cend" "- None \n"
+printf "%b" "📁 " "$green" "GitHub Repository " "$cend" "- https://github.com/Rubberverse/qor-chyrp \n"
 printf "🦆 Guacamole, guacamole\n"
 
 printf "%b" "[✨" " $green" "entrypoint" "$cend" "] Starting php-fpm${PHP_VERSION} using tini\n"
