@@ -280,7 +280,8 @@ RUN apt update \
         /usr/share/vim \
         /var/lib/systemd \
         /app/configs/nginx/snippets \
-        /var/lib/apt
+        /var/lib/apt \
+        /var/cache/apt
 
 COPY php.ini /app/configs/fpm/php.ini
 COPY fpm.conf /app/configs/fpm/php-fpm.conf
