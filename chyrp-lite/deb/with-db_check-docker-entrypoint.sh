@@ -10,7 +10,7 @@ blue='\033[38;5;99m'
 
 printf "%b" "[💡 entrypoint - Info] Hiya, you're running as $(whoami)!\n"
 
-if [ -d /app/www/chyrp ] && [ "$BYPASS_CHECKS" = 0 ]; then
+if [ -d "/app/www/chyrp" ] || [ "$BYPASS_CHECKS" = 1 ]; then
 	printf "%b" "[✨ " "$purple" "entrypoint - Pass" "$cend" "] ✅ Directory including Chyrp Lite files is mounted correctly\n"
 else
 	printf "%b" "[❌ " "$pink" "entrypoint - Error" "$cend" "] No valid directory was found, looked in: /app/www/chyrp\n"
