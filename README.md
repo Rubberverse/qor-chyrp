@@ -1,25 +1,31 @@
-# qor-chyrp
-Experimental rootless container running pre-configured php-fpm and NGINX, intended for serving Chyrp Lite.
+## 🦆 Rubberverse Dockerfiles
 
-## Prerequisites
+Experimental rootless containers running specific per-service configurations, utilizing Nginx and PHP-FPM. Intended for specific php-focused projects.
 
-- Already set-up and ready database used on prior Chyrp Lite installation (MariaDB, PostgreSQL)
-- You have installed Chyrp Lite once and configured it before on your host
+Every image makes use of `tini` and runs both Nginx and php-fpm as rootless user, while encompassing special configuration files to make them plug-n-play when moving from bare-metal deployment.
 
-## Dockerfile
+It's as simple as building the image from the Dockerfile and then running it.
 
-- Debloats the image by removing a lot of tools and system utilities, resulting in a huge decrease of final image size: 592MB to 292MB which is 50% decrease in total image size.
-- Runs by default as a unprivileged user called `nginx_user` and both php-fpm & Nginx are started as this user.
-- Nginx communicates with php-fpm via unix socket.
-- Includes a special Chyrp Lite configuration for Nginx, enabling clean paths and adding proper routing along with extra protection against embedding or accessing `/uploads/`, `/includes/`, `/data/` by unauthorized clients, or using any other unsupported HTTP method.
-- This image can be used with other PHP projects, you can mount any configuration into `/app/configs/nginx/site-enabled` and your PHP sites into `/app/www/<name>`.
-- Log files are accessible in `/app/configs/fpm/fpm-access.log`, `/app/configs/fpm/fpm-error.log`, `/app/configs/fpm/php-error.log`, `/app/configs/nginx/error.log` and `/app/configs/nginx/access.log`.
-- PID files and socket files are accessible in `/app/run/php-fpm.pid`, `/app/run/nginx.pid` and `/app/run/php-fpm.sock`.
+## 🛑 Prerequisites
 
-## Assumptions
+- You must have already used the project
+- It means you must have already correctly set-up database for the project you wish to containerize instead
+- It also means you have the bare-metal web/php files at hand as you will need to mount them inside the container, they don't come bundled with core projects they're supposed to serve as some of them don't support such approach
 
-- You will only use this to reverse proxy traffic, no TLS will be done on Nginx side.
-- More environmental variable options will be added with time. They're only ran during container start-up as Nginx doesn't support environmental variables in configuration, so the way it works is it uses `envsubst` against a `.template` file and then writes it into a otherwise blank `nginx.conf` & `chyrp.conf`.
+## 🐳 General Dockerfile Configuration
+
+- If Debian base image, debloats the image by removing a lot of system utilities and left-overs from apt, this means that systemd is also in turn purged away from the base image
+- Runs by default as unprivileged user called `nginx_user` with both UID and GID of `1001`
+- Both Nginx and php-fpm processes run as unprivileged user
+- Nginx communicates with php-fpm via it's unix socket, which can be found in `/app/run/php-fpm.sock`, PID files can be found in same directory
+- Log files are accessible in following directories: `/app/configs/fpm` and `/app/configs/nginx`
+- These images are made in mind that you will only host a certain service it's made for and nothing else
+- Clean URLs support via a custom nginx configuration for services that support it
+
+## 💁 Project Assumptions
+
+- This will be only used to reverse traffic to another web server such as Caddy that will terminate TLS, and in turn expose the service out to the world
+- You won't modify core Nginx configuration as it's already set in a good-enough, production-ready manner. Although you're free to modify entrypoint script to change that and customize the Dockerfile to your liking, it's self-documented with CLI commands so shouldn't be too hard. (Create GitHub issue if you need help!)
 
 ## Build
 
