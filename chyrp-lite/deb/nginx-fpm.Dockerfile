@@ -55,6 +55,7 @@ RUN apt update \
 		${DEB}-mysql \
 		${DEB}-pgsql \
 		${DEB}-mcrypt \
+		${DEB}-sqlite3 \
 		${DEB}-mbstring \
 	&& mkdir -p \
 		/app/run \
