@@ -110,7 +110,7 @@ RUN chown -Rf $CONT_USER:$CONT_USER \
 	# Hardcoded: https://salsa.debian.org/nginx-team/nginx/-/blob/debian/1.26.0-2/debian/rules#L32
 	/var/lib/nginx
 
-COPY --chmod=755 /scripts/docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
+COPY --chmod=755 /freshrss/docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
 
 USER $CONT_USER
 
