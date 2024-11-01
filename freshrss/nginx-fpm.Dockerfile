@@ -26,7 +26,7 @@ ENV DEB=$DEB \
 	SERVICE_NAME=$SERVICE_NAME \
 	DIRECTORY_PATH=$DIRECTORY_PATH
 
-COPY --chmod=755 remove-junk.sh /app/scripts/remove-junk.sh
+COPY --chmod=755 /scripts/remove-junk.sh /app/scripts/remove-junk.sh
 
 WORKDIR /app
 
@@ -98,12 +98,12 @@ RUN apt update \
 	&& /app/scripts/remove-junk.sh \
 	&& rm /app/scripts/remove-junk.sh
 
-COPY php.ini /app/configs/fpm/php.ini
-COPY fpm.conf /app/configs/fpm/php-fpm.conf
-COPY www.conf /app/configs/fpm/pool.d/www.conf
-COPY nginx.conf /app/configs/nginx.conf.template
-COPY freshrss.conf /app/configs/freshrss.conf.template
-COPY crontab /app/configs/crontab
+COPY /freshrss/php.ini /app/configs/fpm/php.ini
+COPY /configs/fpm.conf /app/configs/fpm/php-fpm.conf
+COPY /configs/www.conf /app/configs/fpm/pool.d/www.conf
+COPY /configs/nginx.conf /app/configs/nginx.conf.template
+COPY /configs/nginx/freshrss.conf /app/configs/freshrss.conf.template
+COPY /freshrss/crontab /app/configs/crontab
 
 RUN chown -Rf $CONT_USER:$CONT_USER \
 	/app \
