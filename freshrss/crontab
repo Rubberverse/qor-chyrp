@@ -1,0 +1,1 @@
+15 * * * * /usr/bin/php8.2 -f /app/www/freshrss/app/actualize_script.php > /app/logs/nginx/freshrss.log 2>&1
