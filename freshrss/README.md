@@ -23,3 +23,11 @@ Includes following bare minimum to run FreshRSS: `php-fpm`, `php-gd`, `php-zip`,
 5. Run `podman build -f nginx-fpm.Dockerfile -t localhost/freshrss:latest`
 6. Look into the Dockerfile to see environmental variables, you definitely want to customize the `NGINX_` ones to your liking
 7. Deploy it and navigate to `http://localhost:9001`
+
+## 🤠 Usage
+
+You probably want to mount `/app/www/freshrss/data` for data persistence. If you will do a bind mount, make sure to mirror the exact contents of the directory (can be done by downloading FreshRSS off their GitHub page and copying `data` folder)
+
+If you want, you should mount `/app/www/freshrss/extensions` too, so you can install custom extensions easily.
+
+You will need a valid MySQL/MariaDB or PostgreSQL installation, though you also have sqlite3 option which is probably what you want if you will be the only one using it.
