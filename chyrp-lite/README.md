@@ -80,6 +80,16 @@ In order to fix it, you need to edit your existing configuration that was create
 
 Refrain from mounting just `config.json.php` into the `includes/` folder, Chyrp Lite hates that. Mount entire directory instead!
 
+### 403 Forbidden on Uploaded media
+
+Somebody forgot to change `NGINX_VALID_REFS` environmental variable. Just put your site there enclosed by "quotation marks" and it will work again ex.
+
+```bash
+Environment=NGINX_VALID_REFS="blog.rubberverse.xyz rubberverse.xyz"
+```
+
+Restart container and they will show up properly. Oh, and also make sure to clear browser cache or press shift+f5 to bypass cache.
+
 ## ♻️ Updating
 
 Non-lazy route:
