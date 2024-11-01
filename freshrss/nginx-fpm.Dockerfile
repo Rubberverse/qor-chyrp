@@ -14,8 +14,8 @@ ARG DEB="php8.2" \
 	SERVICE_NAME="FreshRSS" \
 	DIRECTORY_PATH="/app/www/freshrss" \
 	SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/v0.2.33/supercronic-linux-amd64" \
-    SUPERCRONIC_SHA1SUM=71b0d58cc53f6bd72cf2f293e09e294b79c666d8 \
-    SUPERCRONIC=supercronic-linux-amd64
+	SUPERCRONIC_SHA1SUM=71b0d58cc53f6bd72cf2f293e09e294b79c666d8 \
+	SUPERCRONIC=supercronic-linux-amd64
 
 ENV DEB=$DEB \
 	PHP_VERSION=$PHP_VERSION \
