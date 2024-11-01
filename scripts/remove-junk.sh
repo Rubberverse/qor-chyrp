@@ -29,4 +29,5 @@ rm \
 rm -rf \
 	/usr/lib/apt /usr/lib/binfmt.d /usr/lib/dpkg /usr/lib/environment.d /usr/lib/git-core /usr/lib/systemd /usr/lib/tmpfiles.d \
 	/usr/share/bash-completion /usr/share/X11 /usr/share/git-core /usr/share/git-web /usr/share/initramfs-tools /usr/share/java \
-	/usr/share/pam /usr/share/perl /usr/share/perl5 /usr/share/vim /var/lib/systemd /app/configs/nginx/snippets /var/lib/apt
+	/usr/share/pam /usr/share/perl /usr/share/perl5 /usr/share/vim /var/lib/systemd /app/configs/nginx/snippets /var/lib/apt \
+ 	/usr/lib/x86_64-linux-gnu/systemd /etc/systemd \
