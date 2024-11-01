@@ -2,15 +2,9 @@
 
 Experimental rootless containers running specific per-service configurations, utilizing Nginx and PHP-FPM. Intended for specific php-focused projects.
 
-Every image makes use of `tini` and runs both Nginx and php-fpm as rootless user, while encompassing special configuration files to make them plug-n-play when moving from bare-metal deployment.
+Every image makes use of `tini` and runs both Nginx that and php-fpm as rootless user, while encompassing special configuration files to make them plug-n-play when moving from bare-metal deployment.
 
 It's as simple as building the image from the Dockerfile and then running it.
-
-## 🛑 Prerequisites
-
-- You must have already used the project
-- It means you must have already correctly set-up database for the project you wish to containerize instead
-- It also means you have the bare-metal web/php files at hand as you will need to mount them inside the container, they don't come bundled with core projects they're supposed to serve as some of them don't support such approach
 
 ## 🐳 General Dockerfile Configuration
 
@@ -26,15 +20,3 @@ It's as simple as building the image from the Dockerfile and then running it.
 
 - This will be only used to reverse traffic to another web server such as Caddy that will terminate TLS, and in turn expose the service out to the world
 - You won't modify core Nginx configuration as it's already set in a good-enough, production-ready manner. Although you're free to modify entrypoint script to change that and customize the Dockerfile to your liking, it's self-documented with CLI commands so shouldn't be too hard. (Create GitHub issue if you need help!)
-
-## Build
-
-1. Clone this git repository: `git clone https://github.com/Rubberverse/qor-chyrp.git`.
-2. Enter the directory and move `nginx-fpm.Dockerfile` from qor-chyrp/debian to root of this directory: `mv qor-chyrp/debian/nginx-fpm.Dockerfile .`.
-3. Move contents of scripts and configs to root of this directory: `mv scripts/* .; mv configs/* .`.
-
-💁 If you want to mount your own nginx.conf, open `docker-entrypoint.sh` and comment out line 14 to prevent the entrypoint script from overwriting it.
-
-4. Make yourself accustomed to build arguments.
-5. Build the image with `podman build -f nginx-fpm.Dockerfile -t localhost/nginx:latest`.
-6. Use the image and make sure to customize Environmental Variables to your own liking.
