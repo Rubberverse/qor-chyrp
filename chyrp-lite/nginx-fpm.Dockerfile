@@ -31,7 +31,7 @@ ENV DEB=$DEB \
 
 WORKDIR /app
 
-COPY --chmod=755 remove-junk.sh /app/scripts/remove-junk.sh
+COPY --chmod=755 /scripts/remove-junk.sh /app/scripts/remove-junk.sh
 
 RUN apt update \
 	&& apt install --no-install-recommends -y \
@@ -91,17 +91,17 @@ RUN apt update \
 	&& /app/scripts/remove-junk.sh \
 	&& rm /app/scripts/remove-junk.sh
 
-COPY php.ini /app/configs/fpm/php.ini
-COPY fpm.conf /app/configs/fpm/php-fpm.conf
-COPY www.conf /app/configs/fpm/pool.d/www.conf
-COPY nginx.conf /app/configs/nginx.conf.template
-COPY chyrp.conf /app/configs/chyrp.conf.template
+COPY /chyrp-lite/php.ini /app/configs/fpm/php.ini
+COPY /configs/fpm.conf /app/configs/fpm/php-fpm.conf
+COPY /configs/www.conf /app/configs/fpm/pool.d/www.conf
+COPY /configs/nginx.conf /app/configs/nginx.conf.template
+COPY /configs/nginx/chyrp.conf /app/configs/chyrp.conf.template
 
 RUN chown -Rf $CONT_USER:$CONT_USER \
 	/app \
 	/var/lib/nginx
 
-COPY --chmod=755 docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
+COPY --chmod=755 /chyrp-lite/docker-entrypoint.sh /app/scripts/docker-entrypoint.sh
 
 USER $CONT_USER
 
