@@ -36,7 +36,7 @@ jobs:
           buildArgs: GIT_BRANCH="v2024.03",GIT_REPOSITORY="https://github.com/xenocrat/chyrp-lite.git"
           multiPlatform: false
           enableBuildKit: true
-          tags: v2024.03-debian, latest-alpine
+          tags: v2024.03-debian, latest-debian
           platform: linux/amd64
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
