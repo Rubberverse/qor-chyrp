@@ -10,7 +10,7 @@ blue='\033[38;5;99m'
 
 printf "%b" "[💡 entrypoint - Info] Hiya, you're running as $(whoami)!\n"
 
-if [ -d "/app/www/chyrp" ]; then
+if [ -d "$DIRECTORY_PATH" ]; then
 	printf "%b" "[✨ " "$purple" "entrypoint - Pass" "$cend" "] ✅ Directory including \"$SERVICE_NAME\" files is mounted correctly\n"
 else
 	printf "%b" "[❌ " "$pink" "entrypoint - Error" "$cend" "] No valid directory was found, looked in: \"$DIRECTORY_PATH\"\n"
@@ -40,4 +40,4 @@ tini -- /usr/sbin/php-fpm"${PHP_VERSION}" \
 printf "%b" "[✨" " $green" "entrypoint" "$cend" "] Starting NGINX using tini and leaving entrypoint\n"
 exec tini -- /usr/sbin/nginx \
         -c /app/configs/nginx/nginx.conf \
-        -g 'daemon off;'
+        -g 'daemon on;'
