@@ -39,7 +39,6 @@ RUN apt update \
 		sed \
 		curl \
 		adduser \
-		postfix \
 		gettext-base \
 		ca-certificates \
 	&& addgroup \
