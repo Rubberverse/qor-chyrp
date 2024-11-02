@@ -11,7 +11,7 @@ Intended to be ran behind a reverse proxy providing TLS.
 
 ## ⚙️ PHP Modules
 
-Includes following bare minimum to run FreshRSS: `php-fpm`, `php-gd`, `php-zip`, `php-gmp`, `php-xml`, `php-exif`, `php-intl`, `php-curl`, `php-iconv`, `php-pdo_mysql`, `php-pdo_pgsql`, `php-pdo_sqlite3` and `php-mbstring`
+Includes following bare minimum to run FreshRSS: `php-gd`, `php-fpm`, `php-intl`, `php-curl`, `php-mysql`, `php-pgsql`, `php-sqlite3`, `php-mbstring` and `php-opcache`
 
 ## 🛠️ Build guide
 
