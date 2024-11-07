@@ -20,3 +20,8 @@ It's as simple as building the image from the Dockerfile and then running it.
 
 - This will be only used to reverse traffic to another web server such as Caddy that will terminate TLS, and in turn expose the service out to the world
 - You won't modify core Nginx configuration as it's already set in a good-enough, production-ready manner. Although you're free to modify entrypoint script to change that and customize the Dockerfile to your liking, it's self-documented with CLI commands so shouldn't be too hard. (Create GitHub issue if you need help!)
+
+## Docker Hub Links
+
+- [Chyrp Lite](https://hub.docker.com/repository/docker/mrrubberducky/qor-chyrplite/general)
+- [FreshRSS](https://hub.docker.com/repository/docker/mrrubberducky/qor-freshrss/general)
