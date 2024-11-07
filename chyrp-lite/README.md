@@ -140,7 +140,7 @@ If you're making use of sitemap, point it to this directory and then mount it. I
 
 ### 📦 Existing Chyrp Lite installations
 
-1. Mount `includes/`, `uploads/` and `sitemap.xml` to your container for data persistence
+1. Mount existing `includes/`, `uploads/` and `sitemap.xml` to your container for data persistence
 2. Set `NGINX_SERVER_NAME` and `NGINX_VALID_REFS` to your domain that you will be using to serve Chyrp Lite under
 3. Create a blank file `touch blank` and mount it against following files inside container via a Volume mount: `/app/www/chyrp/install.php` and `/app/www/chyrp/upgrade.php`
 4. Put your container up and your site is accessible via `http://localhost:9001`
