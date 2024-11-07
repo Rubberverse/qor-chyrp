@@ -20,7 +20,7 @@ else
 fi
 
 printf "%b" "[✨ " "$purple" "entrypoint - envsubst" "$cend" "] Substituting environmental variables for NGINX configuration\n"
-envsubst '${NGINX_WORKER_PROCESSES} ${NGINX_WORKER_CONNECTIONS} ${NGINX_MULTI_ACCEPT} ${NGINX_CLIENT_MAX_BODY_SIZE} ${NGINX_SENDFILE} ${NGINX_TCP_NOPUSH} ${NGINX_CHARSET} ${NGINX_KEEPALIVE_TIMEOUT} ${NGINX_GZIP_VARY}' < /app/configs/nginx.conf.template > /app/configs/nginx/nginx.conf
+envsubst '${NGINX_WORKER_PROCESSES} ${NGINX_WORKER_CONNECTIONS} ${NGINX_MULTI_ACCEPT} ${NGINX_CLIENT_MAX_BODY_SIZE} ${NGINX_SENDFILE} ${NGINX_SENDFILE_MAX_CHUNK} ${NGINX_DIRECTIO} ${NGINX_DIRECTIO_ALIGNMENT} ${NGINX_OUTPUT_BUFFERS} ${NGINX_TCP_NOPUSH} ${NGINX_CHARSET} ${NGINX_KEEPALIVE_TIMEOUT} ${NGINX_GZIP_VARY}' < /app/configs/nginx.conf.template > /app/configs/nginx/nginx.conf
 envsubst '${NGINX_HTTP_SERVER_PORT} ${NGINX_SERVER_NAME} ${NGINX_FASTCGI_CONNECTION} ${NGINX_VALID_REFS}' < /app/configs/$SERVICE_CONFIG.template > /app/configs/nginx/sites-enabled/$SERVICE_CONFIG
 printf "%b" "[✨ " "$purple" "entrypoint - Pass" "$cend" "] ✅ Successfully substituted environmental variables for NGINX configuration!\n"
 
