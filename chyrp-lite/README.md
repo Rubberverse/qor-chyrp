@@ -29,7 +29,7 @@ Intended to be ran behind a reverse proxy that will terminate TLS. Nginx communi
 ⚙️ **PHP Environmental Variables**
 
 💁 PHP variables are set to sane production values, recommended by `php.ini` configuration that ships with Debian 12. 
-Changing them is not recommended unless you need it for your setup, ex. incompatible charset.
+Changing them is not recommended unless you need it for your setup, ex. incompatible charset, to set correct timezone.
 
 Refer to PHP documentation in order to know what these do, this is to ensure you know what you're actually changing. You can easily look up any option by just searching for ex. "php short_open_tag"
 
@@ -194,7 +194,7 @@ Lazy route:
 4. Navigate to `localhost:9001/upgrade.php`
 5. Remove the file from host with `podman exec -t CONT_ID rm /app/www/chyrp/upgrade.php`
 
-Correct folder structure is `/app/www/chyrp/<root>` and not ex. `/app/www/chyrp/chyrplite-2024.03/<root>`. Verify that your mount are correct.
+Correct folder structure is `/app/www/chyrp/<root>` and not ex. `/app/www/chyrp/chyrplite-2024.03/<root>`. Verify that your mounts are correct.
 
 ## 🍒 Troubleshooting
 
@@ -235,11 +235,19 @@ You didn't change `NGINX_VALID_REFS` environmental variable or it points to a wr
 
 Just put your site there enclosed by "quotation marks" and it will work again ex.
 
+
 ```bash
 Environment=NGINX_VALID_REFS="blog.rubberverse.xyz rubberverse.xyz"
 ```
 
 Restart container and they will show up properly. Oh, and also make sure to clear browser cache or press shift+f5 to bypass cache.
+
+### 404 Not Found
+
+Your mounted directory or files have mis-matching permission between container user and host. Add `,U` or `,U=true` to your `Volume=` and `Mount=` respectively to make container chown them and fix the permissions up for you.
+You can check permissions of directories at any time by running `podman exec -t chyrp-lite ls -l /app/www/chyrp`, nginx and fpm also log to `/app/logs` directories so you can troubleshoot it better. By the way you can just read them from the container by issuing `cat` against them, no need to mount them on host.
+
+Another cause of the problem could be that you overwrote root chyrp directory with wrong directory (no `index.php` in root) so check to make sure that's not the case. 
 
 ## 🖌️ Customization
 
