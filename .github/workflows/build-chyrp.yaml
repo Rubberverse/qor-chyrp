@@ -1,4 +1,4 @@
-name: Build the image
+name: Build Chyrp Lite image and push to Docker Hub
 
 on:
   push:
@@ -35,19 +35,6 @@ jobs:
           multiPlatform: false
           enableBuildKit: true
           tags: v2024.03-debian, latest-debian
-          platform: linux/amd64
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build & Push FreshRSS image
-        uses: mr-smithers-excellent/docker-build-push@v6
-        with:
-          image: mrrubberducky/qor-freshrss
-          registry: docker.io
-          dockerfile: freshrss/nginx-fpm.Dockerfile
-          buildArgs: GIT_BRANCH="1.24.3",GIT_REPOSITORY="https://github.com/FreshRSS/FreshRSS.git"
-          multiPlatform: false
-          enableBuildKit: true
-          tags: 1.24.3-debian, latest-debian
           platform: linux/amd64
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
