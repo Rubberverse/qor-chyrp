@@ -1,8 +1,8 @@
 ## 🦆 Rubberverse container images
 
-![Image version](https://img.shields.io/badge/Image_Version-v2024.03-purple) ![caddy version](https://img.shields.io/badge/Chyrp_Lite_Oak_v2024.03-brown) ![qor-chyrplite pulls](https://img.shields.io/docker/pulls/mrrubberducky/qor-chyrplite)
+![Image version](https://img.shields.io/badge/Image_Version-v2024.03-purple) ![caddy version](https://img.shields.io/badge/Chyrp_Lite-v2024.03_"Oak"-brown) ![qor-chyrplite pulls](https://img.shields.io/docker/pulls/mrrubberducky/qor-chyrplite)
 
-📦 **Currently supported build(s)**: `v2024.03-debian`
+📦 **Currently supported build(s)**: `v2024.03-debian`, `latest-debian`
 
 ♻️ **Update Policy**: On new stable releases of Chyrp Lite
 
@@ -12,7 +12,7 @@
 
 | 🐳 Image(s) | 📁 Tag(s) | 📓 Description | 💻 Architecture |
 |----------|--------|-------------|---------------|
-| `docker.io/mrrubberducky/qor-chyrplite:latest-debian` | `latest-debian`, `$VERSION-alpine` | Runs as `nginx_user`, uses `debian:bookworm-slim` image as base | x86_64 |
+| `docker.io/mrrubberducky/qor-chyrplite:latest-debian` | `latest-debian`, `$VERSION-debian` | Runs as `nginx_user`, uses `debian:bookworm-slim` image as base | x86_64 |
 
 ## Extensive Image Information
 
