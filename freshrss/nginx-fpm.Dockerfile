@@ -31,11 +31,14 @@ COPY --chmod=755 /scripts/remove-junk.sh /app/scripts/remove-junk.sh
 WORKDIR /app
 
 RUN apt update \
+	&& apt upgrade -y \
 	&& apt install --no-install-recommends -y \
 		git \
 		sed \
 		curl \
 		adduser \
+		openssl=3.0.15-1~deb12u1 \
+		sqlite3=3.40.1-2+deb12u1 \
 		gettext-base \
 		ca-certificates \
 	&& addgroup \
