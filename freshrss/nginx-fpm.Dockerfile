@@ -55,7 +55,7 @@ RUN apt update \
 	&& apt install --no-install-recommends -y \
 		tini \
 		nginx \
-		${DEB} \
+		"${DEB}"=8.2.26-1~deb12u1 \
 		${DEB}-gd \
 		${DEB}-zip \
 		${DEB}-gmp \
