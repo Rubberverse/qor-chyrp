@@ -12,7 +12,7 @@ ARG GIT_BRANCH="v2024.03"
 ARG GIT_REPOSITORY="https://github.com/xenocrat/chyrp-lite.git"
 
 ARG DEB="php8.2" \
-	PHP_VERSION="8.2=8.2.26-1~deb12u1" \
+	PHP_VERSION="8.2" \
 	CONT_USER=nginx_user \
 	CONT_UID=1001 \
 	SERVICE_CONFIG="chyrp.conf" \
@@ -59,7 +59,7 @@ RUN apt update \
 		cron \
 		tini \
 		nginx \
-		${DEB} \
+		${DEB}=8.2.26-1~deb12u1 \
 		${DEB}-gd \
 		${DEB}-fpm \
 		${DEB}-intl \
